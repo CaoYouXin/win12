@@ -766,47 +766,47 @@ let apps = {
             <circle cx="8px" cy="8px" r="7px" style="stroke:#7f7f7f50;fill:none;stroke-width:3px;"></circle>
             <circle cx="8px" cy="8px" r="7px" style="stroke:#2983cc;stroke-width:3px;"></circle></svg></loading>`)
             // 实时获取主题
-            $.get('https://api.github.com/repos/tjy-gitnub/win12-theme/contents').then(cs => {
-                cs.forEach(c => {
-                    if (c.type == 'dir') {
-                        $.get(c.url).then(cnt => {
-                            $('#set-theme').html('');
-                            cnt.forEach(cn => {
-                                if (cn.name == 'theme.json') {
-                                    $.getJSON('https://tjy-gitnub.github.io/win12-theme/' + cn.path).then(inf => {
-                                        infjs = inf;
-                                        if ($('#set-theme>loading').length)
-                                            $('#set-theme').html('');
-                                        $('#set-theme').append(`<a class="a act" onclick="apps.setting.theme_set('${c.name}')" style="background-image:url('https://tjy-gitnub.github.io/win12-theme/${c.name}/view.jpg')">${c.name}</a>`);
-                                    })
-                                }
-                            })
-                        })
-                    }
-                });
-            });
+            // $.get('https://api.github.com/repos/tjy-gitnub/win12-theme/contents').then(cs => {
+            //     cs.forEach(c => {
+            //         if (c.type == 'dir') {
+            //             $.get(c.url).then(cnt => {
+            //                 $('#set-theme').html('');
+            //                 cnt.forEach(cn => {
+            //                     if (cn.name == 'theme.json') {
+            //                         $.getJSON('https://tjy-gitnub.github.io/win12-theme/' + cn.path).then(inf => {
+            //                             infjs = inf;
+            //                             if ($('#set-theme>loading').length)
+            //                                 $('#set-theme').html('');
+            //                             $('#set-theme').append(`<a class="a act" onclick="apps.setting.theme_set('${c.name}')" style="background-image:url('https://tjy-gitnub.github.io/win12-theme/${c.name}/view.jpg')">${c.name}</a>`);
+            //                         })
+            //                     }
+            //                 })
+            //             })
+            //         }
+            //     });
+            // });
         },
         theme_set: (infp) => {
-            $.get('https://api.github.com/repos/tjy-gitnub/win12-theme/contents/' + infp).then(cnt => {
-                console.log('https://api.github.com/repos/tjy-gitnub/win12-theme/contents/' + infp);
-                cnt.forEach(cn => {
-                    if (cn.name == 'theme.json') {
-                        $.getJSON('https://tjy-gitnub.github.io/win12-theme/' + cn.path).then(inf => {
-                            infjs = inf;
-                            cnt.forEach(fbg => {
-                                console.log(fbg, infjs);
-                                if (fbg.name == infjs.bg) {
-                                    $(':root').css('--bgul', `url('https://tjy-gitnub.github.io/win12-theme/${fbg.path}')`);
-                                    $(':root').css('--theme-1', infjs.color1);
-                                    $(':root').css('--theme-2', infjs.color2);
-                                    $(':root').css('--href', infjs.href);
-                                    // $('#set-theme').append(`<a class="a act" onclick="apps.setting.theme_set(\`(${inf})\`)" style="background-image:url('https://tjy-gitnub.github.io/win12-theme/${fbg.path}')">${c.name}</a>`);
-                                }
-                            })
-                        })
-                    }
-                })
-            })
+            // $.get('https://api.github.com/repos/tjy-gitnub/win12-theme/contents/' + infp).then(cnt => {
+            //     console.log('https://api.github.com/repos/tjy-gitnub/win12-theme/contents/' + infp);
+            //     cnt.forEach(cn => {
+            //         if (cn.name == 'theme.json') {
+            //             $.getJSON('https://tjy-gitnub.github.io/win12-theme/' + cn.path).then(inf => {
+            //                 infjs = inf;
+            //                 cnt.forEach(fbg => {
+            //                     console.log(fbg, infjs);
+            //                     if (fbg.name == infjs.bg) {
+            //                         $(':root').css('--bgul', `url('https://tjy-gitnub.github.io/win12-theme/${fbg.path}')`);
+            //                         $(':root').css('--theme-1', infjs.color1);
+            //                         $(':root').css('--theme-2', infjs.color2);
+            //                         $(':root').css('--href', infjs.href);
+            //                         // $('#set-theme').append(`<a class="a act" onclick="apps.setting.theme_set(\`(${inf})\`)" style="background-image:url('https://tjy-gitnub.github.io/win12-theme/${fbg.path}')">${c.name}</a>`);
+            //                     }
+            //                 })
+            //             })
+            //         }
+            //     })
+            // })
         },
         checkUpdate: () => {
             $('#win-setting>.page>.cnt.update>.lo>.update-main .notice')[0].innerText = '正在检查更新...';
@@ -815,35 +815,35 @@ let apps = {
             $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:first-child')[0].innerText = '正在检查更新...';
             $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:last-child')[0].innerHTML = '&nbsp;';
             $('#win-setting>.page>.cnt.update>.lo>.update-main>div:last-child').addClass('disabled');
-            fetch('https://api.github.com/repos/tjy-gitnub/win12/commits').then(res => {
-                res.json().then(json => {
-                    const sha = localStorage.getItem('sha');
-                    if (sha != json[0].sha) {
-                        let msg = json[0].commit.message.split('\n\n')[0];
-                        if (msg.match(/v[0-9]*\.[0-9]*\.[0-9]*/)) {
-                            msg = msg.match(/v[0-9]*\.[0-9]*\.[0-9]*/)[0];
-                            window.setTimeout(() => {
-                                $('#win-setting>.page>.cnt.update>.lo>.update-main .notice')[0].innerText = 'Windows 12 有更新可用';
-                                $('#win-setting>.page>.cnt.update>.lo>.update-main .detail')[0].innerText = `目前最新版本: ${msg}`;
-                                $('#win-setting>.page>.cnt.update>.lo>.update-main>div:last-child').removeClass('disabled');
-                                $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:first-child')[0].innerText = '更新已就绪';
-                                $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:last-child')[0].innerText = msg;
-                                $('#win-setting>.page>.cnt.update>.setting-list>.update-now').removeClass('disabled');
-                            }, 6000);
-                        }
-                        else {
-                            window.setTimeout(() => {
-                                let da = new Date();
-                                $('#win-setting>.page>.cnt.update>.lo>.update-main .notice')[0].innerText = 'Windows 12 目前是最新版本';
-                                $('#win-setting>.page>.cnt.update>.lo>.update-main .detail')[0].innerText = `上次检查时间: ${da.getFullYear()}年${da.getMonth() + 1}月${da.getDate()}日，${da.getHours()}: ${da.getMinutes()}`;
-                                $('#win-setting>.page>.cnt.update>.lo>.update-main>div:last-child').removeClass('disabled');
-                                $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:first-child')[0].innerText = '无更新可用';
-                                $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:last-child')[0].innerText = 'Windows 12 目前是最新版本';
-                            }, 6000)
-                        }
-                    }
-                });
-            });
+            // fetch('https://api.github.com/repos/tjy-gitnub/win12/commits').then(res => {
+            //     res.json().then(json => {
+            //         const sha = localStorage.getItem('sha');
+            //         if (sha != json[0].sha) {
+            //             let msg = json[0].commit.message.split('\n\n')[0];
+            //             if (msg.match(/v[0-9]*\.[0-9]*\.[0-9]*/)) {
+            //                 msg = msg.match(/v[0-9]*\.[0-9]*\.[0-9]*/)[0];
+            //                 window.setTimeout(() => {
+            //                     $('#win-setting>.page>.cnt.update>.lo>.update-main .notice')[0].innerText = 'Windows 12 有更新可用';
+            //                     $('#win-setting>.page>.cnt.update>.lo>.update-main .detail')[0].innerText = `目前最新版本: ${msg}`;
+            //                     $('#win-setting>.page>.cnt.update>.lo>.update-main>div:last-child').removeClass('disabled');
+            //                     $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:first-child')[0].innerText = '更新已就绪';
+            //                     $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:last-child')[0].innerText = msg;
+            //                     $('#win-setting>.page>.cnt.update>.setting-list>.update-now').removeClass('disabled');
+            //                 }, 6000);
+            //             }
+            //             else {
+            //                 window.setTimeout(() => {
+            //                     let da = new Date();
+            //                     $('#win-setting>.page>.cnt.update>.lo>.update-main .notice')[0].innerText = 'Windows 12 目前是最新版本';
+            //                     $('#win-setting>.page>.cnt.update>.lo>.update-main .detail')[0].innerText = `上次检查时间: ${da.getFullYear()}年${da.getMonth() + 1}月${da.getDate()}日，${da.getHours()}: ${da.getMinutes()}`;
+            //                     $('#win-setting>.page>.cnt.update>.lo>.update-main>div:last-child').removeClass('disabled');
+            //                     $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:first-child')[0].innerText = '无更新可用';
+            //                     $('#win-setting>.page>.cnt.update>.setting-list>.update-now>div>p:last-child')[0].innerText = 'Windows 12 目前是最新版本';
+            //                 }, 6000)
+            //             }
+            //         }
+            //     });
+            // });
         }
     },
     run: {
@@ -2090,15 +2090,15 @@ let apps = {
         get: () => {
             apps.about.run_loading('#contri');
             // 实时获取项目贡献者
-            $.get('https://api.github.com/repos/tjy-gitnub/win12/contributors').then(cs => {
-                setTimeout(() => {
-                    $('#contri').html('');
-                    cs.forEach(c => {
-                        $('#contri').append(`<a class="a" onclick="window.open('${c['html_url']}','_blank');"><p class="name">${c['login']}</p><p class="cbs">贡献：<span class="num">${c['contributions']}</span></p></a>`)
-                    });
-                    $('#contri').append(`<a class="button" onclick="apps.about.get()"><i class="bi bi-arrow-clockwise"></i> 刷新</a>`)
-                }, 200);
-            });
+            // $.get('https://api.github.com/repos/tjy-gitnub/win12/contributors').then(cs => {
+            //     setTimeout(() => {
+            //         $('#contri').html('');
+            //         cs.forEach(c => {
+            //             $('#contri').append(`<a class="a" onclick="window.open('${c['html_url']}','_blank');"><p class="name">${c['login']}</p><p class="cbs">贡献：<span class="num">${c['contributions']}</span></p></a>`)
+            //         });
+            //         $('#contri').append(`<a class="button" onclick="apps.about.get()"><i class="bi bi-arrow-clockwise"></i> 刷新</a>`)
+            //     }, 200);
+            // });
         },
         get_star: () => {
             apps.about.run_loading('#StarShow')
@@ -2803,8 +2803,10 @@ function editMode() {
     }
     edit_mode = !edit_mode
 }
+let fallbackSlot = { col: 1, row: 1 };
 function widgetsMove(elt, e) {
-    if (elt.classList.contains('desktop') && edit_mode == true) {
+    console.log(e, elt);
+    if (e.button === 0 && elt.classList.contains('desktop') && edit_mode == true) {
         let width = elt.getBoundingClientRect().width;
         let height = elt.getBoundingClientRect().height;
         let gridrow = window.getComputedStyle(elt, null).gridRowEnd.replace('span ', '');
@@ -2823,7 +2825,7 @@ function widgetsMove(elt, e) {
 
         $('#desktop-widgets>.widgets-move').addClass('show');
         // $('#desktop-widgets>.widgets-move').css('cssText', `width: ${width}px; height: ${height}px;`);
-        function widgetsMoving(e) {
+        function widgetsMoving(e, record = false) {
             let left = 0, top = 0;
             if (e.type.match('mouse')) {
                 left = e.clientX - deltaLeft;
@@ -2836,13 +2838,23 @@ function widgetsMove(elt, e) {
             elt.style.left = `${left}px`;
             elt.style.top = `${top}px`;
             // 基于人脑计算qwq
+            // gridnow = {
+            //     col: Math.round((elt.getBoundingClientRect().right - 20 + width / 2) / ((gridcolmax * 83 + 10 * (gridcolmax - 1)) / gridcolmax) - gridcol + (gridcol - 2) * 0.5),
+            //     row: Math.round((height / 2 + top - 20) / ((gridrowmax * 83 + 10 * (gridrowmax - 1)) / gridrowmax) + (2 - gridrow) * 0.5)
+            // }
+
+            // 基于LTR计算
             gridnow = {
-                col: ((width / 2 + elt.getBoundingClientRect().right - 20) / ((gridcolmax * 83 + 10 * (gridcolmax - 1)) / gridcolmax) - gridcol + (gridcol - 2) * 0.5).toFixed(0),
-                row: ((height / 2 + top - 20) / ((gridrowmax * 83 + 10 * (gridrowmax - 1)) / gridrowmax) + (2 - gridrow) * 0.5).toFixed(0)
-            }
-            gridnow.col = gridnow.col <= Math.floor(gridcol / 2) ? 1 + Math.floor(gridcol / 2) : gridnow.col > (gridcolmax - gridcol + (gridcol % 2 ? (Number(gridcol) + 1) / 2 : gridcol / 2)) ? (gridcolmax - gridcol + (gridcol % 2 ? (Number(gridcol) + 1) / 2 : gridcol / 2)) : gridnow.col;
+                col: Math.ceil((left - 20 + 83 / 2) / (83 + 10)),
+                row: Math.ceil((top - 20 + 83 / 2) / (83 + 10)),
+            };
+            gridnow.col = gridnow.col <= 0 ? 1 : gridnow.col >= (gridcolmax - gridcol + 1) ? gridcolmax - gridcol + 1 : gridnow.col;
             gridnow.row = gridnow.row <= 0 ? 1 : gridnow.row >= (gridrowmax - gridrow + 1) ? gridrowmax - gridrow + 1 : gridnow.row;
-            $('#desktop-widgets>.widgets-move').css('cssText', `grid-column: ${gridcolmax - gridnow.col} / span ${gridcol}; grid-row: ${gridnow.row} / span ${gridrow}`);
+            if (record) {
+                fallbackSlot = gridnow;
+                removeDesktopSlot(gridnow);
+            }
+            $('#desktop-widgets>.widgets-move').css('cssText', `grid-column: ${gridnow.col} / span ${gridcol}; grid-row: ${gridnow.row} / span ${gridrow}`);
         }
         function up() {
             elt.classList.remove('notrans');
@@ -2852,25 +2864,61 @@ function widgetsMove(elt, e) {
             elt.style.left = `${destLeft}px`;
             elt.style.top = `${destTop}px`;
             window.setTimeout(() => {
+                let collision = examDesktopSlots(gridnow);
+                desktopSlots.push(collision ? fallbackSlot : gridnow);
                 elt.style.position = 'static';
-                $(elt).css('cssText', `grid-column: ${gridcolmax - gridnow.col} / span ${gridcol}; grid-row: ${gridnow.row} / span ${gridrow}`);
+                $(elt).css('cssText', `grid-column: ${collision ? fallbackSlot.col : gridnow.col} / span ${gridcol}; grid-row: ${collision ? fallbackSlot.row : gridnow.row} / span ${gridrow}`);
                 elt.style.left = `0px`;
                 elt.style.top = `0px`;
                 $('#desktop-widgets>.widgets-move').removeClass('show');
-            }, 500);
+            }, 0);
             page.onmousemove = null;
             page.ontouchmove = null;
             page.onmouseup = null;
             page.ontouchend = null;
             page.ontouchcancel = null;
         }
-        widgetsMoving(e);
+        widgetsMoving(e, true);
         page.onmousemove = widgetsMoving;
         page.ontouchmove = widgetsMoving;
         page.onmouseup = up;
         page.ontouchend = up;
         page.ontouchcancel = up;
     }
+}
+let desktopSlots = [];
+function examDesktopSlots(gridnow) {
+    console.log(JSON.stringify(desktopSlots), JSON.stringify(gridnow));
+    return desktopSlots.some(slot => slot.col === gridnow.col && slot.row === gridnow.row);
+}
+function removeDesktopSlot(girdnow) {
+    console.log(JSON.stringify(desktopSlots), JSON.stringify(gridnow));
+    let idx = desktopSlots.findIndex(slot => slot.col === gridnow.col && slot.row === gridnow.row);
+    
+    console.log(idx);
+    if (idx !== -1) {
+        desktopSlots.splice(idx, 1);
+    }
+    console.log(JSON.stringify(desktopSlots));
+}
+function fixLocation(elt) {
+    let gridrowmax = window.getComputedStyle($('#desktop-widgets')[0], null).gridTemplateRows.split(' ').length;
+    let gridcolmax = window.getComputedStyle($('#desktop-widgets')[0], null).gridTemplateColumns.split(' ').length;
+    let gridrow = window.getComputedStyle(elt, null).gridRowEnd.replace('span ', '');
+    let gridcol = window.getComputedStyle(elt, null).gridColumnEnd.replace('span ', '');
+    let left = elt.getBoundingClientRect().left;
+    let top = elt.getBoundingClientRect().top;
+    gridnow = {
+        col: Math.ceil((left - 20 + 83 / 2) / (83 + 10)),
+        row: Math.ceil((top - 20 + 83 / 2) / (83 + 10)),
+    };
+    gridnow.col = gridnow.col <= 0 ? 1 : gridnow.col >= (gridcolmax - gridcol + 1) ? gridcolmax - gridcol + 1 : gridnow.col;
+    gridnow.row = gridnow.row <= 0 ? 1 : gridnow.row >= (gridrowmax - gridrow + 1) ? gridrowmax - gridrow + 1 : gridnow.row;
+    desktopSlots.push(gridnow);
+    elt.style.position = 'static';
+    $(elt).css('cssText', `grid-column: ${gridnow.col} / span ${gridcol}; grid-row: ${gridnow.row} / span ${gridrow}`);
+    elt.style.left = `0px`;
+    elt.style.top = `0px`;
 }
 function decodeHtml(s) {
     $('#translater').text(s);
@@ -3559,19 +3607,19 @@ function ch(e) {
     $('#desktop>.choose').css('top', Math.min(chstY, e.clientY));
     $('#desktop>.choose').css('height', Math.abs(e.clientY - chstY));
 }
-$('#desktop')[0].addEventListener('mousedown', e => {
-    chstX = e.clientX;
-    chstY = e.clientY;
-    this.onmousemove = ch;
-})
-window.addEventListener('mouseup', e => {
-    this.onmousemove = null;
-    $('#desktop>.choose').css('left', 0);
-    $('#desktop>.choose').css('top', 0);
-    $('#desktop>.choose').css('display', 'none');
-    $('#desktop>.choose').css('width', 0);
-    $('#desktop>.choose').css('height', 0);
-})
+// $('#desktop')[0].addEventListener('mousedown', e => {
+//     chstX = e.clientX;
+//     chstY = e.clientY;
+//     this.onmousemove = ch;
+// })
+// window.addEventListener('mouseup', e => {
+//     this.onmousemove = null;
+//     $('#desktop>.choose').css('left', 0);
+//     $('#desktop>.choose').css('top', 0);
+//     $('#desktop>.choose').css('display', 'none');
+//     $('#desktop>.choose').css('width', 0);
+//     $('#desktop>.choose').css('height', 0);
+// })
 let isDrak = false;
 
 // 主题
@@ -3787,23 +3835,23 @@ page.addEventListener('mousemove', (e) => {
 
 function setIcon() {
     if (Array.isArray(JSON.parse(localStorage.getItem('desktop')))) {
-        $('#desktop')[0].innerHTML = `<div ondblclick="openapp('explorer');" ontouchstart="openapp('explorer');" oncontextmenu="return showcm(event,'desktop.icon',['explorer',-1]);" appname="explorer">
+        $('#desktop')[0].innerHTML = `<div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('explorer');" ontouchstart="openapp('explorer');" oncontextmenu="return showcm(event,'desktop.icon',['explorer',-1]);" appname="explorer">
         <img src="apps/icons/explorer/thispc.svg">
         <p>此电脑</p>
     </div>
-    <div class="b" ondblclick="openapp('setting');" ontouchstart="openapp('setting');" oncontextmenu="return showcm(event,'desktop.icon',['setting',-1]);" appname="setting">
+    <div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('setting');" ontouchstart="openapp('setting');" oncontextmenu="return showcm(event,'desktop.icon',['setting',-1]);" appname="setting">
         <img src="icon/setting.svg">
         <p>设置</p>
     </div>
-    <div class="b" ondblclick="openapp('about');" ontouchstart="openapp('about');" oncontextmenu="return showcm(event,'desktop.icon',['about',-1]);" appname="about">
+    <div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('about');" ontouchstart="openapp('about');" oncontextmenu="return showcm(event,'desktop.icon',['about',-1]);" appname="about">
         <img src="icon/about.svg">
         <p>关于 Win12 网页版</p>
     </div>
-    <div class="b" ondblclick="openapp('edge');" ontouchstart="openapp('edge');" oncontextmenu="return showcm(event,'desktop.icon',['edge',-1]);" appname="edge">
+    <div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('edge');" ontouchstart="openapp('edge');" oncontextmenu="return showcm(event,'desktop.icon',['edge',-1]);" appname="edge">
         <img src="icon/edge.svg">
-        <p>Microsoft Edge</p>
+        <p>Microsoft Edge China ShanXi DaTong</p>
     </div>
-    <div class="b" ondblclick="shownotice('feedback');" ontouchstart="shownotice('feedback');;">
+    <div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="shownotice('feedback');" ontouchstart="shownotice('feedback');;">
         <img src="icon/feedback.svg">
         <p>反馈中心</p>
     </div>
@@ -3837,16 +3885,18 @@ function setIcon() {
     if (localStorage.getItem('root_class')) {
         $(':root')[0].className = localStorage.getItem('root_class');
     }
+
+    $('#desktop>.desktop').each(function() { fixLocation($(this).get(0)); });
 }
 
 // 启动
 document.getElementsByTagName('body')[0].onload = function nupd() {
     setTimeout(() => {
         $('#loadback').addClass('hide');
-    }, 500);
+    }, 100);
     setTimeout(() => {
         $('#loadback').css('display', 'none');
-    }, 1000);
+    }, 500);
     apps.webapps.init();
     //getdata
     if (localStorage.getItem('theme') == 'dark') $(':root').addClass('dark');
@@ -3855,6 +3905,7 @@ document.getElementsByTagName('body')[0].onload = function nupd() {
         $(':root').css('--theme-2', localStorage.getItem('color2'));
     }
     setIcon();//加载桌面图标
+    editMode()//自动进入编辑模式
 
     // 所以这个东西为啥要在开机的时候加载？
     // 不应该在python.init里面吗？
@@ -3893,24 +3944,24 @@ document.getElementsByTagName('body')[0].onload = function nupd() {
     // loadlang();
 };
 
-let autoUpdate = true;
+let autoUpdate = false;
 function checkUpdate() {
     const sha = localStorage.getItem('sha');
-    fetch('https://api.github.com/repos/tjy-gitnub/win12/commits').then(res => {
-        res.json().then(json => {
-            if (sha != json[0].sha && sha) {
-                localStorage.setItem('update', true);
-                sendToSw({
-                    head: 'update'
-                });
-            }
-            localStorage.setItem('sha', json[0].sha);
-        });
-    });
+    // fetch('https://api.github.com/repos/tjy-gitnub/win12/commits').then(res => {
+    //     res.json().then(json => {
+    //         if (sha != json[0].sha && sha) {
+    //             localStorage.setItem('update', true);
+    //             sendToSw({
+    //                 head: 'update'
+    //             });
+    //         }
+    //         localStorage.setItem('sha', json[0].sha);
+    //     });
+    // });
 }
 
 if (localStorage.getItem('autoUpdate') == undefined) {
-    localStorage.setItem('autoUpdate', true);
+    localStorage.setItem('autoUpdate', false);
 }
 else {
     autoUpdate = (autoUpdate == 'true');

@@ -1562,23 +1562,34 @@ input-before {
     width: 100%;
     height: calc(100% - 50px);
     z-index: 0;
-    display: flex;
+
+    padding: 20px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, 83px);
+    grid-template-rows: repeat(auto-fill, 83px);
+    grid-auto-flow: column;
+    direction: ltr;
+    
+    /* display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-content: flex-start;
+    align-content: flex-start; */
     transition: 30ms;
-    justify-content: flex-start;
-    align-items: baseline;
+    /* justify-content: flex-start;
+    align-items: baseline; */
 }
 
 #desktop>div {
-    width: 85px;
-    height: 84px;
+    grid-column: auto / span 1;
+    grid-row: auto / span 1;
+    width: 83px;
+    height: 83px;
     text-overflow: ellipsis;
     border-radius: 5px;
     text-align: center;
-    margin: 8px 10px 2px 10px;
-    padding: 0 3px 3px 3px;
+    /* margin: 8px 10px 2px 10px;
+    padding: 0 3px 3px 3px; */
     z-index: 3;
 }
 
@@ -1588,6 +1599,10 @@ input-before {
 
 #desktop>div:active {
     backdrop-filter: blur(5px) brightness(1.5);
+}
+
+#desktop>div>* {
+    pointer-events: none;
 }
 
 #desktop>div>img {
@@ -1607,6 +1622,14 @@ input-before {
     color: #fff;
     text-shadow: 2px 2px 4px var(--sd), 0 0 3px #000;
     margin-top: -6px;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    overflow:hidden;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
 }
 
 #desktop>.choose {
@@ -1631,7 +1654,7 @@ input-before {
     height: calc(100% - 50px);
     /* width: max-content; */
     grid-auto-flow: row;
-    direction: rtl;
+    direction: ltr;
     padding: 20px;
     pointer-events: none;
 }

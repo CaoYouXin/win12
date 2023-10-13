@@ -148,23 +148,23 @@ showcm(event,id,arg) 显示右键菜单，使用方法：oncontextmenu="return s
 				else {
 					this.innerText += '.';
 				}
-			}, 500);
+			}, 256);
 			window.setTimeout(() => {
 				this.style.transition = 'color 500ms';
-			}, 100);
+			}, 50);
 			window.setTimeout(() => {
 				$('#loginback').addClass('close');
 				window.setTimeout(() => {
 					$('#loginback').css('opacity', '0');
-				}, 500);
+				}, 100);
 				window.setTimeout(() => {
 					$('#loginback').css('display', 'none');
 					window.clearInterval(qwq);
-				}, 2000);
+				}, 800);
 				if(use_music){
 					document.querySelector('audio#startup-music').play();
 				}
-			}, 1000);
+			}, 500);
 			this.onclick = null;
 		">
 			登录
@@ -231,7 +231,7 @@ showcm(event,id,arg) 显示右键菜单，使用方法：oncontextmenu="return s
 				<a oncontextmenu="return showcm(event, 'smlapp', ['edge', 'Microsoft Edge'])"
 					onclick="openapp('edge');hide_startmenu();">
 					<img src="icon/edge.svg">
-					<p>Microsoft Edge</p>
+					<p>Microsoft Edge China ShanXi DaTong</p>
 				</a>
 				<a oncontextmenu="return showcm(event, 'smlapp', ['camera', '相机'])"
 					onclick="apps.camera.notice();hide_startmenu()">
@@ -383,7 +383,7 @@ showcm(event,id,arg) 显示右键菜单，使用方法：oncontextmenu="return s
 					<a class="a sm-app enable edge" onclick="openapp('edge');hide_startmenu();"
 						oncontextmenu="return showcm(event,'smapp',['edge','Microsoft Edge'])">
 						<img src="icon/edge.svg">
-						<p>Microsoft Edge</p>
+						<p>Microsoft Edge China ShanXi DaTong</p>
 					</a>
 					<a class="a sm-app enable" onclick="openapp('windows12');hide_startmenu();"
 						oncontextmenu="return showcm(event,'smapp',['windows12','Windows 12'])">
@@ -913,23 +913,23 @@ showcm(event,id,arg) 显示右键菜单，使用方法：oncontextmenu="return s
 		</div>
 	</div>
 	<div id="desktop">
-		<div ondblclick="openapp('explorer');" ontouchstart="openapp('explorer');" win12_title="显示连接到此计算机的驱动器和硬件。" oncontextmenu="return showcm(event,'desktop.icon',['explorer',-1]);" appname="explorer">
+		<div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('explorer');" ontouchstart="openapp('explorer');" win12_title="显示连接到此计算机的驱动器和硬件。" oncontextmenu="return showcm(event,'desktop.icon',['explorer',-1]);" appname="explorer">
 			<img src="apps/icons/explorer/thispc.svg">
 			<p>此电脑</p>
 		</div>
-		<div class="b" ondblclick="openapp('setting');" ontouchstart="openapp('setting');" oncontextmenu="return showcm(event,'desktop.icon',['setting',-1]);" appname="setting">
+		<div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('setting');" ontouchstart="openapp('setting');" oncontextmenu="return showcm(event,'desktop.icon',['setting',-1]);" appname="setting">
 			<img src="icon/setting.svg">
 			<p>设置</p>
 		</div>
-		<div class="b" ondblclick="openapp('about');" ontouchstart="openapp('about');" oncontextmenu="return showcm(event,'desktop.icon',['about',-1]);" appname="about">
+		<div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('about');" ontouchstart="openapp('about');" oncontextmenu="return showcm(event,'desktop.icon',['about',-1]);" appname="about">
 			<img src="icon/about.svg">
 			<p>关于 Win12 网页版</p>
 		</div>
-		<div class="b" ondblclick="openapp('edge');" ontouchstart="openapp('edge');" oncontextmenu="return showcm(event,'desktop.icon',['edge',-1]);" appname="edge">
+		<div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="openapp('edge');" ontouchstart="openapp('edge');" oncontextmenu="return showcm(event,'desktop.icon',['edge',-1]);" appname="edge">
 			<img src="icon/edge.svg">
-			<p>Microsoft Edge</p>
+			<p>Microsoft Edge China ShanXi DaTong</p>
 		</div>
-		<div class="b" ondblclick="shownotice('feedback');" ontouchstart="shownotice('feedback');;">
+		<div class="b desktop" onmousedown="widgetsMove(this, event);" ondblclick="shownotice('feedback');" ontouchstart="shownotice('feedback');;">
 			<img src="icon/feedback.svg">
 			<p>反馈中心</p>
 		</div>
@@ -2118,7 +2118,7 @@ showcm(event,id,arg) 显示右键菜单，使用方法：oncontextmenu="return s
 		<div style="height:3px;width:100%;display: none;" id="over-bar" onmouseover="if(apps.edge.fuls){$('.edge>.titbar').show();$('.edge>.content>.tool').show()}" onmouseleave="if(apps.edge.fuls&&(apps.edge.b1||apps.edge.b2)){$('.edge>.titbar').hide();$('.edge>.content>.tool').hide()}"></div>
 		<div class="titbar" onmouseleave="apps.edge.b1=false;" onmouseover="apps.edge.b1=true;" id="edge-titbar">
 			<img src="icon/edge.svg" class="icon">
-			<p style="display: none;">Microsoft Edge</p>
+			<p style="display: none;">Microsoft Edge China ShanXi DaTong</p>
 			<div class="tabs">
 			</div>
 			<div>
